@@ -497,6 +497,9 @@ switch ($case):
 
             $pluginDatabaseInfo = $SQL->fetch($result);
 
+            //close the cursor before the callback, SQLite can not DROP a table while a read is still pending
+            $SQL->freeresult($result);
+
             //sad to see you go, brother
             $uninstall_callback(!empty($pluginDatabaseInfo) ? $pluginDatabaseInfo['plg_id'] : 0);
 
